@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Resume Builder</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Arial', sans-serif; }
+    body {
+      background: #f4f4f9;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 1rem;
+      min-height: 100vh;
+    }
+
+    h1 {
+      margin-bottom: 1rem;
+      color: #2d89ef;
+      text-align: center;
+    }
+
+    .form-container {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+      width: 100%;
+      max-width: 500px;
+      margin-bottom: 2rem;
+    }
+
+    label { display: block; margin-top: 1rem; font-weight: bold; }
+    input, textarea {
+      width: 100%; padding: 0.6rem; margin-top: 0.4rem;
+      border: 1px solid #ccc; border-radius: 5px;
+    }
+
+    button {
+      margin-top: 1.5rem; width: 100%;
+      padding: 0.8rem; border: none;
+      border-radius: 8px; background: #2d89ef;
+      color: white; font-size: 1rem; font-weight: bold;
+      cursor: pointer; transition: background 0.3s, transform 0.2s;
+    }
+    button:hover { background: #1b5fa7; transform: scale(1.05); }
+
+    /* Resume Styling */
+    .resume-preview {
+      display: flex;
+      flex-wrap: wrap;
+      width: 100%;
+      max-width: 800px;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+      overflow: hidden;
+    }
+
+    .sidebar {
+      background: #2d89ef;
+      color: white;
+      flex: 1;
+      min-width: 200px;
+      padding: 1.5rem;
+    }
+    .sidebar h2 { font-size: 1.8rem; margin-bottom: 1rem; }
+    .sidebar p { margin: 0.5rem 0; }
+    .sidebar ul { list-style: none; padding: 0; }
+    .sidebar ul li { margin: 0.5rem 0; }
+
+    .main {
+      flex: 2;
+      padding: 1.5rem;
+    }
+    .main section { margin-bottom: 1.5rem; }
+    .main h3 { color: #2d89ef; margin-bottom: 0.5rem; }
+    .main p { margin: 0.3rem 0; }
+
+    @media (max-width: 700px) {
+      .resume-preview { flex-direction: column; }
+      .sidebar { min-width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <h1>AI Resume Builder</h1>
+
+  <div class="form-container">
+    <label for="name">Full Name</label>
+    <input type="text" id="name" placeholder="John Doe">
+
+    <label for="email">Email</label>
+    <input type="email" id="email" placeholder="example@email.com">
+
+    <label for="summary">Professional Summary</label>
+    <textarea id="summary" rows="3" placeholder="A brief introduction about yourself"></textarea>
+
+    <label for="skills">Skills (comma-separated)</label>
+    <input type="text" id="skills" placeholder="JavaScript, HTML, CSS">
+
+    <label for="education">Education</label>
+    <textarea id="education" rows="2" placeholder="School, Degree, Years"></textarea>
+
+    <label for="experience">Work Experience</label>
+    <textarea id="experience" rows="3" placeholder="Job Title, Company, Years"></textarea>
+
+    <button onclick="generateResume()">Generate Resume</button>
+  </div>
+
+  <div class="resume-preview" id="resume">
+    <div class="sidebar">
+      <h2>Your Name</h2>
+      <p>Email: example@email.com</p>
+      <h3>Skills</h3>
+      <ul><li>List your skills here</li></ul>
+    </div>
+    <div class="main">
+      <section>
+        <h3>Summary</h3>
+        <p>Professional summary will appear here.</p>
+      </section>
+      <section>
+        <h3>Education</h3>
+        <p>Your education details here.</p>
+      </section>
+      <section>
+        <h3>Experience</h3>
+        <p>Your work experience details here.</p>
+      </section>
+      <button onclick="window.print()">Print / Save as PDF</button>
+    </div>
+  </div>
+
+  <script>
+    function generateResume() {
+      const name = document.getElementById('name').value.trim() || "Your Name";
+      const email = document.getElementById('email').value.trim() || "example@email.com";
+      const summary = document.getElementById('summary').value.trim() || "Professional summary will appear here.";
+      const skills = document.getElementById('skills').value.split(',').map(s => s.trim()).filter(Boolean);
+      const education = document.getElementById('education').value.trim() || "Your education details here.";
+      const experience = document.getElementById('experience').value.trim() || "Your work experience details here.";
+
+      document.getElementById('resume').innerHTML = `
+        <div class="sidebar">
+          <h2>${name}</h2>
+          <p>Email: ${email}</p>
+          <h3>Skills</h3>
+          <ul>${skills.length ? skills.map(skill => `<li>${skill}</li>`).join('') : '<li>List your skills here</li>'}</ul>
+        </div>
+        <div class="main">
+          <section>
+            <h3>Summary</h3>
+            <p>${summary}</p>
+          </section>
+          <section>
+            <h3>Education</h3>
+            <p>${education}</p>
+          </section>
+          <section>
+            <h3>Experience</h3>
+            <p>${experience}</p>
+          </section>
+          <button onclick="window.print()">Print / Save as PDF</button>
+        </div>
+      `;
+    }
+  </script>
+</body>
+  </html>

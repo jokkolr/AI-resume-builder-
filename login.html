@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign Up / Login - AI Resume Builder</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Arial', sans-serif; }
+
+    body {
+      display: flex; justify-content: center; align-items: center;
+      height: 100vh;
+      background: url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f') no-repeat center center/cover;
+      color: #333;
+    }
+
+    .overlay {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.5); /* darkens background for contrast */
+      z-index: -1;
+    }
+
+    .container {
+      background: white;
+      padding: 2rem;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+      width: 90%; max-width: 400px;
+      text-align: center;
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h2 { margin-bottom: 1rem; color: #2d89ef; }
+
+    label {
+      display: block;
+      margin-top: 1rem;
+      text-align: left;
+      font-weight: bold;
+      color: #555;
+    }
+
+    input {
+      width: 100%;
+      padding: 0.6rem;
+      margin-top: 0.4rem;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      transition: border 0.3s;
+    }
+
+    input:focus {
+      border: 1px solid #2d89ef;
+      outline: none;
+    }
+
+    button {
+      margin-top: 1.5rem;
+      width: 100%;
+      padding: 0.8rem;
+      border: none;
+      border-radius: 8px;
+      background: #2d89ef;
+      color: white;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.2s;
+    }
+
+    button:hover {
+      background: #1b5fa7;
+      transform: scale(1.03);
+    }
+
+    .toggle-link {
+      margin-top: 1.2rem;
+      display: inline-block;
+      color: #6a11cb;
+      cursor: pointer;
+      text-decoration: underline;
+      font-size: 0.9rem;
+      transition: color 0.3s;
+    }
+
+    .toggle-link:hover { color: #2d89ef; }
+  </style>
+</head>
+<body>
+  <div class="overlay"></div>
+  <div class="container">
+    <h2 id="form-title">Sign Up</h2>
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" placeholder="Enter your email">
+
+    <label for="password">Password:</label>
+    <input type="password" id="password" placeholder="Enter your password">
+
+    <button id="submit-btn">Sign Up</button>
+    <span class="toggle-link" id="toggle-form">Already have an account? Login</span>
+  </div>
+
+  <script>
+    let isLogin = false;
+
+    const title = document.getElementById('form-title');
+    const btn = document.getElementById('submit-btn');
+    const toggle = document.getElementById('toggle-form');
+
+    toggle.addEventListener('click', () => {
+      isLogin = !isLogin;
+      title.textContent = isLogin ? "Login" : "Sign Up";
+      btn.textContent = isLogin ? "Login" : "Sign Up";
+      toggle.textContent = isLogin ? "Don't have an account? Sign Up" : "Already have an account? Login";
+    });
+
+    btn.addEventListener('click', () => {
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value.trim();
+
+      if (!email || !password) {
+        alert("Please enter both email and password.");
+        return;
+      }
+
+      if (isLogin) {
+        const savedEmail = localStorage.getItem('resumeEmail');
+        const savedPass = localStorage.getItem('resumePass');
+        if (email === savedEmail && password === savedPass) {
+          alert("Login successful!");
+          window.location.href = "builder.html";
+        } else {
+          alert("Invalid email or password.");
+        }
+      } else {
+        localStorage.setItem('resumeEmail', email);
+        localStorage.setItem('resumePass', password);
+        alert("Account created! You can now log in.");
+        isLogin = true;
+        title.textContent = "Login";
+        btn.textContent = "Login";
+        toggle.textContent = "Don't have an account? Sign Up";
+      }
+    });
+  </script>
+</body>
+    </html>

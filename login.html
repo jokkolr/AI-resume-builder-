@@ -17,7 +17,7 @@
     .overlay {
       position: absolute;
       top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(0, 0, 0, 0.5); /* darkens background for contrast */
+      background: rgba(0, 0, 0, 0.5);
       z-index: -1;
     }
 
@@ -38,13 +38,7 @@
 
     h2 { margin-bottom: 1rem; color: #2d89ef; }
 
-    label {
-      display: block;
-      margin-top: 1rem;
-      text-align: left;
-      font-weight: bold;
-      color: #555;
-    }
+    label { display: block; margin-top: 1rem; text-align: left; font-weight: bold; color: #555; }
 
     input {
       width: 100%;
@@ -52,7 +46,6 @@
       margin-top: 0.4rem;
       border: 1px solid #ccc;
       border-radius: 8px;
-      transition: border 0.3s;
     }
 
     input:focus {
@@ -74,10 +67,7 @@
       transition: background 0.3s, transform 0.2s;
     }
 
-    button:hover {
-      background: #1b5fa7;
-      transform: scale(1.03);
-    }
+    button:hover { background: #1b5fa7; transform: scale(1.03); }
 
     .toggle-link {
       margin-top: 1.2rem;
@@ -86,10 +76,7 @@
       cursor: pointer;
       text-decoration: underline;
       font-size: 0.9rem;
-      transition: color 0.3s;
     }
-
-    .toggle-link:hover { color: #2d89ef; }
   </style>
 </head>
 <body>
@@ -134,6 +121,7 @@
         const savedEmail = localStorage.getItem('resumeEmail');
         const savedPass = localStorage.getItem('resumePass');
         if (email === savedEmail && password === savedPass) {
+          localStorage.setItem('isLoggedIn', true);
           alert("Login successful!");
           window.location.href = "builder.html";
         } else {
@@ -142,13 +130,11 @@
       } else {
         localStorage.setItem('resumeEmail', email);
         localStorage.setItem('resumePass', password);
-        alert("Account created! You can now log in.");
-        isLogin = true;
-        title.textContent = "Login";
-        btn.textContent = "Login";
-        toggle.textContent = "Don't have an account? Sign Up";
+        localStorage.setItem('isLoggedIn', true);
+        alert("Account created! Redirecting...");
+        window.location.href = "builder.html";
       }
     });
   </script>
 </body>
-    </html>
+</html>
